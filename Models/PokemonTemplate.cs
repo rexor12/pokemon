@@ -16,7 +16,6 @@ namespace PokemonGame.Models
         /// <summary>
         /// Gets or sets the base health points of the Pokémon.
         /// </summary>
-        /// <value></value>
         public int Health { get; set; }
 
         /// <summary>

@@ -1,4 +1,4 @@
-using System;
+using PokemonGame.Utilities;
 using PokemonGame.DataProviders;
 using PokemonGame.DependencyInjection.Attributes;
 using PokemonGame.Models;
@@ -19,11 +19,15 @@ namespace PokemonGame
         public IRandomNumberGenerator RandomNumberGenerator { get; set; }
 
         /// <inheritdoc/>
-        public Pokemon CreateFrom(PokemonTemplate pokemonTemplate) =>
-            new Pokemon(pokemonTemplate.Name)
+        public Pokemon CreateFrom(PokemonTemplate pokemonTemplate)
+        {
+            ExceptionHelper.ThrowIfNull(nameof(pokemonTemplate), pokemonTemplate);
+
+            return new Pokemon(pokemonTemplate.Name)
             {
                 Attack = pokemonTemplate.Attack,
                 Health = (int)(pokemonTemplate.Health * RandomNumberGenerator.NextDouble(1d, 1.1d))
             };
+        }
     }
 }

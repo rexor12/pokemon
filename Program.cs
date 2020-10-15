@@ -25,7 +25,7 @@ namespace PokemonGame
                 {
                     container.Resolve(game, catalog);
                 }
-                Console.WriteLine("[Info] Successfully booted Pokémon.");
+                Console.WriteLine("[Info] Successfully booted Pokémon. Press Ctrl+C to exit anytime.");
 
                 game.Run();
             }

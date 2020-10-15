@@ -74,12 +74,12 @@ namespace PokemonGame
 
         private PokemonTemplate GetPlayerTemplate()
         {
-            Console.WriteLine($"Choose your Pokémon: {string.Join(", ", PokemonTemplates.AllEntities.Select(template => template.Name))}");
+            Console.WriteLine($"Choose your Pokémon: {PokemonTemplates.AllEntities.Join(template => template.Name, ", ")}");
             PokemonTemplate playerTemplate = null;
             while (!PokemonTemplates.TryGet(Console.ReadLine(), out playerTemplate))
             {
                 Console.WriteLine($"The Pokémon you have chosen doesn't exist. Please, choose one from the following list:{Environment.NewLine}"
-                                  + $"{string.Join(", ", PokemonTemplates.AllEntities.Select(template => template.Name))}");
+                                  + $"{PokemonTemplates.AllEntities.Join(template => template.Name, ", ")}");
             }
             Console.WriteLine($"Your chosen Pokémon is {playerTemplate.Name}.");
 

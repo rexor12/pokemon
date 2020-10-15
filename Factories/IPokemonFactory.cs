@@ -12,6 +12,7 @@ namespace PokemonGame
         /// </summary>
         /// <param name="pokemonTemplate">The <see cref="PokemonTemplate"/> to create the Pokémon from.</param>
         /// <returns>A new instance of <see cref="Pokemon"/>.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when a mandatory argument is <c>null</c>.</exception>
         Pokemon CreateFrom(PokemonTemplate pokemonTemplate);
     }
 }

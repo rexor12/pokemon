@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using PokemonGame.Utilities;
 using PokemonGame.DependencyInjection.Attributes;
 using PokemonGame.DependencyInjection.Catalogs;
 
@@ -23,13 +24,13 @@ namespace PokemonGame.DependencyInjection
         /// <param name="instance">The instance of <typeparamref name="T"/> to resolve.</param>
         /// <param name="dependableCatalog">The <see cref="ExportCatalog"/> that provides the exported parts.</param>
         /// <typeparam name="T">The type of the object to resolve.</typeparam>
+        /// <exception cref="ArgumentNullException">Thrown when a mandatory argument is <c>null</c>.</exception>
         public void Resolve<T>(T instance, ExportCatalog dependableCatalog)
             where T : class
         {
-            if (_isDisposed == 1)
-            {
-                throw new ObjectDisposedException(nameof(DependencyContainer));
-            }
+            ExceptionHelper.ThrowIfNull(nameof(instance), instance);
+            ExceptionHelper.ThrowIfNull(nameof(dependableCatalog), dependableCatalog);
+            ThrowIfDisposed();
 
             Resolve((object)instance, dependableCatalog);
         }
@@ -39,7 +40,7 @@ namespace PokemonGame.DependencyInjection
         {
             if (Interlocked.CompareExchange(ref _isDisposed, 1, 0) == 1)
             {
-                throw new ObjectDisposedException(nameof(DependencyContainer));
+                ThrowIfDisposed();
             }
 
             foreach (var dependable in _dependencies.Values)
@@ -90,6 +91,16 @@ namespace PokemonGame.DependencyInjection
             dependable = Activator.CreateInstance(dependableType);
             Resolve(dependable, exportCatalog);
             return dependable;
+        }
+
+        private void ThrowIfDisposed()
+        {
+            if (_isDisposed == 0)
+            {
+                return;
+            }
+
+            throw new ObjectDisposedException(nameof(DependencyContainer));
         }
     }
 }

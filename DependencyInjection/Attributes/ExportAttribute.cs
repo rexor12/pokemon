@@ -1,4 +1,5 @@
 using System;
+using PokemonGame.Utilities;
 
 namespace PokemonGame.DependencyInjection.Attributes
 {
@@ -17,8 +18,11 @@ namespace PokemonGame.DependencyInjection.Attributes
         /// Initializes a new instance of <see cref="ExportAttribute"/>.
         /// </summary>
         /// <param name="exportType">The <see cref="Type"/> the exported part satisfies.</param>
+        /// <exception cref="ArgumentNullException">Thrown when a mandatory argument is <c>null</c>.</exception>
         public ExportAttribute(Type exportType)
         {
+            ExceptionHelper.ThrowIfNull(nameof(exportType), exportType);
+
             ExportType = exportType;
         }
     }

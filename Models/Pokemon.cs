@@ -1,4 +1,4 @@
-using System;
+using PokemonGame.Utilities;
 
 namespace PokemonGame.Models
 {
@@ -32,12 +32,12 @@ namespace PokemonGame.Models
         /// Initializes a new instance of <see cref="Pokemon"/>.
         /// </summary>
         /// <param name="name">The name that uniquely identifies the Pokémon.</param>
+        /// <exception cref="ArgumentException">
+        /// Thrown when a mandatory argument is <c>null</c> or consists of white-space characters only.
+        /// </exception>
         public Pokemon(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException(nameof(name), "Argument cannot be null or contain white-space characters only.");
-            }
+            ExceptionHelper.ThrowIfNullOrWhiteSpace(nameof(name), name);
 
             Name = name;
         }
